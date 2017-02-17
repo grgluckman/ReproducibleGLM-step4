@@ -2,7 +2,7 @@
 title: "Full Model Docs"
 author: "Steph Locke"
 date: "16 February 2017"
-output: word_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
