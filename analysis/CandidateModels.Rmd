@@ -1,0 +1,48 @@
+---
+title: "Candidate Models"
+author: "Steph Locke"
+date: "16 February 2017"
+output: html_document
+---
+Our fully prepared data can now be used to generate models.
+
+## All-in
+```{r allin}
+allin<-caret::train(survived~.,                                       data=titanic_train_c,
+                    method="glm")
+
+summary(allin)
+
+caret::varImp(allin)
+```
+
+## Simple
+```{r simple}
+simple<-caret::train(survived~sex+pclass,                                       data=titanic_train_c,
+                    method="glm")
+
+summary(simple)
+
+caret::varImp(simple)
+```
+
+## GLMNET
+```{r glmnet}
+net<-caret::train(survived~.,                                       data=titanic_train_c,
+                    method="glmnet")
+
+coef(net$finalModel,s=net$bestTune$lambda)
+caret::varImp(net)
+```
+
+## gbm
+```{r gbm , results='hide'}
+boosted<-caret::train(survived~.,                                       data=titanic_train_c,
+                    method="gbm"
+                    )
+```
+
+```{r gbmprint}
+summary(boosted)
+caret::varImp(boosted)
+```
