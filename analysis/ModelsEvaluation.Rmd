@@ -63,32 +63,37 @@ confusionMatrix(testres$actual, testres$boosted)
 ### allin
 ```{r gallin}
 library(optiRum)
-multiplot(list(
-  giniChart(trainres$allinval.Survived,trainres$actual),
-  giniChart(testres$allinval.Survived,testres$actual), cols=2
-))
+  giniChart(trainres$allinval.Survived,trainres$actual)
+  giniChart(testres$allinval.Survived,testres$actual)
 ```
 
 ### simple
 ```{r gsimple}
-multiplot(list(
-  giniChart(trainres$simpleval.Survived,trainres$actual),
-  giniChart(testres$simpleval.Survived,testres$actual), cols=2
-))
+  giniChart(trainres$simpleval.Survived,trainres$actual)
+  giniChart(testres$simpleval.Survived,testres$actual)
 ```
 
 ### glmnet
 ```{r gnet}
-multiplot(list(
-  giniChart(trainres$netval.Survived,trainres$actual),
-  giniChart(testres$netval.Survived,testres$actual), cols=2
-))
+  giniChart(trainres$netval.Survived,trainres$actual)
+  giniChart(testres$netval.Survived,testres$actual)
 ```
 
 ### gbm
 ```{r gboosted}
-multiplot(list(
-  giniChart(trainres$boostedval.Survived,trainres$actual),
-  giniChart(testres$boostedval.Survived,testres$actual), cols=2
-))
+  giniChart(trainres$boostedval.Survived,trainres$actual)
+  giniChart(testres$boostedval.Survived,testres$actual)
 ```
+
+## Selecting a model
+We can discard the simple model - it doesn't give sufficient discrimination compared to the other models.
+
+
+The full GLM and the regularized version, look like they have similar levels of discrimination. We could do a tuning exercise on the regularized model to see if we could improve it. Given time constraints, we will use the full GLM.
+
+The gradient boosted model appears to be performing best.
+
+## Future work
+We could further tune models and remove unimportant variables.
+
+In other situations, we could compare against another out of time sample.
