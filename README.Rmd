@@ -54,3 +54,5 @@ dbWriteTable(titanicdb, "titanic", titanic3, overwrite=TRUE)
 - glmnet - regularized GLM
 - gbm - multiple GLM which fit different segments of data
 
+## Evaluation
+- Compare metrics for all models

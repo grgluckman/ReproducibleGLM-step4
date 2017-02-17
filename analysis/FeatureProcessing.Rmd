@@ -141,7 +141,7 @@ titanic_test_c$name <- NULL
 titanic_test_c$home.dest <- NULL
 titanic_test_c$boat <- NULL
 titanic_test_c$ticket <- NULL
-titanic_train_c$body<-NULL
+titanic_test_c$body<-NULL
 
 alt_titanic_test_c<-titanic_test_c[,c("survived","age")]
 alt_titanic_test_c$survivedbool<-unclass(alt_titanic_test_c$survived)-1

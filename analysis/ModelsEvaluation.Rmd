@@ -1,0 +1,94 @@
+---
+title: "Evaluating Candidate Models"
+author: "Steph Locke"
+date: "17 February 2017"
+output: html_document
+---
+
+We can gather up all our predicted values.
+```{r cols}
+trainres<-data.frame(
+  actual=titanic_train_c$survived,
+  allin=predict(allin,titanic_train_c),
+  simple=predict(simple,titanic_train_c),
+  net=predict(net,titanic_train_c),
+  boosted=predict(boosted,titanic_train_c),
+  allinval=predict(allin,titanic_train_c,type = "prob"),
+  simpleval=predict(simple,titanic_train_c,type = "prob"),
+  netval=predict(net,titanic_train_c,type = "prob"),
+  boostedval=predict(boosted,titanic_train_c,type = "prob")
+)
+
+titanic_test_c_na<-na.omit(titanic_test_c)
+testres<-data.frame(
+  actual=titanic_test_c_na$survived,
+  allin=predict(allin,titanic_test_c_na),
+  simple=predict(simple,titanic_test_c_na),
+  net=predict(net,titanic_test_c_na),
+  boosted=predict(boosted,titanic_test_c_na),
+  allinval=predict(allin,titanic_test_c_na,type = "prob"),
+  simpleval=predict(simple,titanic_test_c_na,type = "prob"),
+  netval=predict(net,titanic_test_c_na,type = "prob"),
+  boostedval=predict(boosted,titanic_test_c_na,type = "prob")
+)
+```
+
+## Confusion Matrices
+
+### allin
+```{r cmallin}
+confusionMatrix(trainres$actual, trainres$allin)
+confusionMatrix(testres$actual, testres$allin)
+```
+### simple
+```{r cmsimple}
+confusionMatrix(trainres$actual, trainres$simple)
+confusionMatrix(testres$actual, testres$simple)
+```
+
+### glmnet
+```{r cmnet}
+confusionMatrix(trainres$actual, trainres$net)
+confusionMatrix(testres$actual, testres$net)
+```
+
+### gbm
+```{r cmboosted}
+confusionMatrix(trainres$actual, trainres$boosted)
+confusionMatrix(testres$actual, testres$boosted)
+```
+
+## Gini and AUC
+
+### allin
+```{r gallin}
+library(optiRum)
+multiplot(list(
+  giniChart(trainres$allinval.Survived,trainres$actual),
+  giniChart(testres$allinval.Survived,testres$actual), cols=2
+))
+```
+
+### simple
+```{r gsimple}
+multiplot(list(
+  giniChart(trainres$simpleval.Survived,trainres$actual),
+  giniChart(testres$simpleval.Survived,testres$actual), cols=2
+))
+```
+
+### glmnet
+```{r gnet}
+multiplot(list(
+  giniChart(trainres$netval.Survived,trainres$actual),
+  giniChart(testres$netval.Survived,testres$actual), cols=2
+))
+```
+
+### gbm
+```{r gboosted}
+multiplot(list(
+  giniChart(trainres$boostedval.Survived,trainres$actual),
+  giniChart(testres$boostedval.Survived,testres$actual), cols=2
+))
+```

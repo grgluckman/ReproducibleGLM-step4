@@ -36,3 +36,17 @@ Data steps
 -   Get data
 -   Clean it
 -   Sample it
+-   Process the features
+
+Models
+------
+
+-   GLM all features
+-   GLM two features
+-   glmnet - regularized GLM
+-   gbm - multiple GLM which fit different segments of data
+
+Evaluation
+----------
+
+-   Compare metrics for all models
